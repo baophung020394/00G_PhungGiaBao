@@ -17,8 +17,8 @@ function App() {
     firstAmount,
   } = useContext(CurrencyContext);
   const [resultCurrency, setResultCurrency] = useState(0);
-  const codeFromCurrency = fromCurrency.split(" ")[1];
-  const codeToCurrency = toCurrency.split(" ")[1];
+  const codeFromCurrency = fromCurrency?.split(" ")[1];
+  const codeToCurrency = toCurrency?.split(" ")[1];
   const boxStyles = {
     background: "#fdfdfd",
     marginTop: "10rem",
@@ -37,7 +37,7 @@ function App() {
    * this freecurrencyapi have 5k for free request
    */
   useEffect(() => {
-    if (firstAmount) {
+    if (firstAmount > 0 && fromCurrency && toCurrency ) {
       axios("https://api.freecurrencyapi.com/v1/latest", {
         params: {
           apikey: "fca_live_c4G8lmcw9aWJRtB41lx7TIYAAPoZ6T7NlYZUU5D3",
@@ -68,7 +68,7 @@ function App() {
         <SelectCountry label="To" value={toCurrency} setValue={setToCurrency} />
       </Grid>
 
-      {firstAmount ? (
+      {firstAmount > 0 && toCurrency && fromCurrency ? (
         <Box sx={{ textAlign: "left", marginTop: "1rem" }}>
           <Typography>
             {firstAmount} {fromCurrency} =
